@@ -107,7 +107,7 @@ button:hover {
 
 /* Mensagem final */
 #finalMessage {
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: bold;
   color: #c2185b;
   opacity: 0;
