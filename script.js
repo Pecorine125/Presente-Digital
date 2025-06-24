@@ -10,7 +10,8 @@ const messageParts = [
   "Se alguma dificuldade aparecer pelo caminho, saiba que pode sempre contar comigo,",
   "pois estarei ao seu lado para apoiar e ajudar no que precisar.",
   "Tenho muito orgulho de você!",
-  "Feliz aniversário, Bianca Nora! 🎉❤️"
+  "Feliz aniversário, Bianca Nora! 🎉❤️",
+  "Do Seu Aluno: Harahel Guilherme 🦊🐱🎂!"
 ];
 
 // Função de máquina de escrever para uma linha
