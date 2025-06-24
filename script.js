@@ -53,7 +53,13 @@ function runAnimations() {
         clearInterval(balloonInterval);
         animationArea.innerHTML = '';
         // 4. Mostrar mensagem final
-        finalMessage.textContent = 'Feliz aniversário querida prof. Bianca Nora';
+        finalMessage.innerHTML = `
+            <p>Querida Prof. Bianca Nora,</p>
+            <p>Desejo muita felicidade e abraços sinceros para você. Que sua vida seja repleta de surpresas boas, e que você consiga alcançar todos os seus sonhos e metas com facilidade.</p>
+            <p>Se alguma dificuldade aparecer pelo caminho, saiba que pode sempre contar comigo, pois estarei ao seu lado para apoiar e ajudar no que precisar.</p>
+            <p>Tenho muito orgulho de você!</p>
+            <p>Feliz aniversário, Bianca Nora! 🎉❤️</p>
+            `;
         finalMessage.style.animation = 'none';
         // Forçar restart da animação
         void finalMessage.offsetWidth;
