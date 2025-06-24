@@ -112,7 +112,7 @@ button:hover {
   color: #c2185b;
   opacity: 0;
   animation: fadeInScale 2s forwards;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 @keyframes fadeInScale {
