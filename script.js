@@ -13,37 +13,10 @@ const messageParts = [
   "Feliz aniversário, Bianca Nora! 🎉❤️"
 ];
 
-// Função para criar confetes animados
-function createConfetti() {
-  const confetti = document.createElement('div');
-  confetti.classList.add('confetti');
-  confetti.style.left = Math.random() * 100 + 'vw';
-  confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
-  confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
-  animationArea.appendChild(confetti);
-  setTimeout(() => {
-    confetti.remove();
-  }, 5000);
-}
-
-// Função para criar balões animados
-function createBalloon() {
-  const balloon = document.createElement('div');
-  balloon.classList.add('balloon');
-  balloon.style.left = (Math.random() * 80 + 10) + 'vw';
-  balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
-  balloon.style.animationDuration = (5 + Math.random() * 3) + 's';
-  animationArea.appendChild(balloon);
-  setTimeout(() => {
-    balloon.remove();
-  }, 8000);
-}
-
-// Função de máquina de escrever para texto
+// Função máquina de escrever para texto dentro de um elemento
 function typeWriter(element, text, speed = 40) {
   return new Promise((resolve) => {
     let i = 0;
-    element.textContent = '';
     function typing() {
       if (i < text.length) {
         element.textContent += text.charAt(i);
@@ -57,25 +30,26 @@ function typeWriter(element, text, speed = 40) {
   });
 }
 
-// Mostrar a mensagem parte por parte com efeito de digitação
+// Mostrar a mensagem parte por parte sem apagar as anteriores
 async function showMessageParts() {
   finalMessage.style.opacity = 1;
   finalMessage.style.animation = 'none';
   await new Promise(r => setTimeout(r, 10)); // Forçar reflow
 
-  finalMessage.textContent = ''; // limpa antes de começar
+  finalMessage.innerHTML = ''; // limpa antes de começar
 
   for (const part of messageParts) {
-    await typeWriter(finalMessage, part);
-    finalMessage.textContent += '\n'; // pula linha
-    await new Promise(r => setTimeout(r, 700)); // pausa entre partes
+    const line = document.createElement('div');
+    finalMessage.appendChild(line); // adiciona uma nova linha
+    await typeWriter(line, part);
+    await new Promise(r => setTimeout(r, 700)); // pausa entre frases
   }
 
-  // Garante que a mensagem continue visível com animação suave
+  // Animação final suave (escala e opacidade)
   finalMessage.style.animation = 'fadeInScale 2s forwards';
 }
 
-// Função principal para executar as animações em sequência
+// Animação principal em sequência
 function runAnimations() {
   startBtn.style.display = 'none';
   finalMessage.textContent = '';
@@ -109,6 +83,31 @@ function runAnimations() {
       }, 4000);
     }, 2500);
   }, 3000);
+}
+
+// Funções de confetes e balões (iguais ao anterior)
+function createConfetti() {
+  const confetti = document.createElement('div');
+  confetti.classList.add('confetti');
+  confetti.style.left = Math.random() * 100 + 'vw';
+  confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+  confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
+  animationArea.appendChild(confetti);
+  setTimeout(() => {
+    confetti.remove();
+  }, 5000);
+}
+
+function createBalloon() {
+  const balloon = document.createElement('div');
+  balloon.classList.add('balloon');
+  balloon.style.left = (Math.random() * 80 + 10) + 'vw';
+  balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+  balloon.style.animationDuration = (5 + Math.random() * 3) + 's';
+  animationArea.appendChild(balloon);
+  setTimeout(() => {
+    balloon.remove();
+  }, 8000);
 }
 
 startBtn.addEventListener('click', runAnimations);
