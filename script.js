@@ -2,6 +2,7 @@ const startBtn = document.getElementById('startBtn');
 const animationArea = document.getElementById('animationArea');
 const finalMessage = document.getElementById('finalMessage');
 const countdown = document.getElementById('countdown');
+const app = document.getElementById('app');
 
 let confettiInterval;
 
@@ -35,9 +36,14 @@ function showMessage() {
   finalMessage.style.animation = 'none';
   void finalMessage.offsetWidth; // reinicia animação CSS
   finalMessage.style.animation = null;
+
+  // Adiciona classe para centralizar verticalmente
+  app.classList.add('message-active');
 }
 
 function runAnimations() {
+  // Remove centralização para o começo da animação
+  app.classList.remove('message-active');
   startBtn.style.display = 'none';
   finalMessage.textContent = '';
   animationArea.innerHTML = '';
