@@ -1,17 +1,29 @@
 body, html {
   margin: 0; padding: 0; height: 100%;
   background: #ffe6f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
 }
 
 #app {
   text-align: center;
   width: 100%;
   max-width: 400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* padrão começa no topo */
+  align-items: center;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#app.message-active {
+  justify-content: center; /* centraliza verticalmente quando mostrar mensagem final */
 }
 
 button {
@@ -23,6 +35,7 @@ button {
   background-color: #e91e63;
   color: white;
   transition: background-color 0.3s;
+  z-index: 10;
 }
 
 button:hover {
@@ -34,12 +47,15 @@ button:hover {
   font-weight: bold;
   color: #c2185b;
   margin: 20px 0 10px 0;
+  z-index: 10;
 }
 
 #animationArea {
   margin-top: 20px;
   height: 200px;
   position: relative;
+  width: 100%;
+  z-index: 5;
 }
 
 #finalMessage {
@@ -48,16 +64,18 @@ button:hover {
   color: #c2185b;
   opacity: 0;
   animation: fadeInScale 2s forwards;
-  margin-top: 0;
-
-  /* Centralizar vertical e horizontal */
+  margin: 0;
+  padding: 0 15px;
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: center;
+  /* Para garantir centralização */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
-  text-align: center;
-  padding: 0 15px;
+  flex-grow: 1;
+  z-index: 10;
 }
 
 /* Confetes */
@@ -71,6 +89,7 @@ button:hover {
   animation-name: fall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  z-index: 1;
 }
 
 @keyframes fall {
