@@ -1,19 +1,23 @@
+/* Estilo base da página */
 body, html {
-  margin: 0; padding: 0; height: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
   background: #ffe6f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow: hidden;
+  position: relative;
 }
 
+/* Container principal */
 #app {
   text-align: center;
   width: 100%;
   max-width: 400px;
+  margin: 0 auto;
 }
 
+/* Botão de começar */
 button {
   padding: 15px 30px;
   font-size: 1.2rem;
@@ -29,17 +33,24 @@ button:hover {
   background-color: #ad1457;
 }
 
+/* Área de animação central */
 #animationArea {
   margin-top: 40px;
   height: 200px;
   position: relative;
 }
 
-#message {
-  font-size: 1.5rem;
-  margin-top: 30px;
-  opacity: 0;
-  transition: opacity 1s ease;
+/* Texto piscando */
+.blink {
+  animation: blinkAnimation 1s infinite;
+  font-weight: bold;
+  font-size: 2rem;
+  color: #e91e63;
+}
+
+@keyframes blinkAnimation {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
 }
 
 /* Confetes */
@@ -60,19 +71,6 @@ button:hover {
     transform: translateY(110vh);
     opacity: 0;
   }
-}
-
-/* Texto piscando */
-.blink {
-  animation: blinkAnimation 1s infinite;
-  font-weight: bold;
-  font-size: 2rem;
-  color: #e91e63;
-}
-
-@keyframes blinkAnimation {
-  0%, 50%, 100% {opacity: 1;}
-  25%, 75% {opacity: 0;}
 }
 
 /* Balões */
@@ -105,30 +103,36 @@ button:hover {
   }
 }
 
-/* Mensagem final */
+/* Mensagem final formatada */
 #finalMessage {
   font-size: 20px;
   font-weight: bold;
   color: #c2185b;
   opacity: 0;
   animation: fadeInScale 2s forwards;
-  margin-top: 50px;
 
+  /* Nova posição: topo da tela */
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Estilo de texto */
   max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   text-align: center;
-  line-height: 1.4;
-  white-space: pre-line; /* Permite quebra de linha via \n */
+  line-height: 1.6;
+  white-space: pre-line;
+  padding: 0 10px;
 }
 
 @keyframes fadeInScale {
   from {
     opacity: 0;
-    transform: scale(0.7);
+    transform: translateX(-50%) scale(0.7);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateX(-50%) scale(1);
   }
 }

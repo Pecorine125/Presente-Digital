@@ -13,7 +13,7 @@ const messageParts = [
   "Feliz aniversário, Bianca Nora! 🎉❤️"
 ];
 
-// Função máquina de escrever para texto dentro de um elemento
+// Função de máquina de escrever para uma linha
 function typeWriter(element, text, speed = 40) {
   return new Promise((resolve) => {
     let i = 0;
@@ -30,29 +30,28 @@ function typeWriter(element, text, speed = 40) {
   });
 }
 
-// Mostrar a mensagem parte por parte sem apagar as anteriores
+// Exibe todas as frases, de cima para baixo
 async function showMessageParts() {
   finalMessage.style.opacity = 1;
   finalMessage.style.animation = 'none';
-  await new Promise(r => setTimeout(r, 10)); // Forçar reflow
+  await new Promise(r => setTimeout(r, 10)); // forçar reflow
 
-  finalMessage.innerHTML = ''; // limpa antes de começar
+  finalMessage.innerHTML = ''; // limpa tudo antes de começar
 
   for (const part of messageParts) {
-    const line = document.createElement('div');
-    finalMessage.appendChild(line); // adiciona uma nova linha
-    await typeWriter(line, part);
-    await new Promise(r => setTimeout(r, 700)); // pausa entre frases
+    const line = document.createElement('div'); // nova linha
+    finalMessage.appendChild(line); // adiciona linha no final → de cima para baixo
+    await typeWriter(line, part); // escreve na nova linha
+    await new Promise(r => setTimeout(r, 700)); // pausa entre linhas
   }
 
-  // Animação final suave (escala e opacidade)
   finalMessage.style.animation = 'fadeInScale 2s forwards';
 }
 
-// Animação principal em sequência
+// Roda as animações em sequência
 function runAnimations() {
   startBtn.style.display = 'none';
-  finalMessage.textContent = '';
+  finalMessage.innerHTML = '';
   finalMessage.style.opacity = 0;
   animationArea.innerHTML = '';
 
@@ -71,21 +70,22 @@ function runAnimations() {
     setTimeout(() => {
       animationArea.innerHTML = '';
 
-      // 3. Balões subindo por 4 segundos
+      // 3. Balões por 4 segundos
       const balloonInterval = setInterval(createBalloon, 300);
       setTimeout(() => {
         clearInterval(balloonInterval);
         animationArea.innerHTML = '';
 
-        // 4. Mostrar mensagem final animada
+        // 4. Mostrar mensagem final
         showMessageParts();
-
       }, 4000);
+
     }, 2500);
+
   }, 3000);
 }
 
-// Funções de confetes e balões (iguais ao anterior)
+// Criação dos confetes
 function createConfetti() {
   const confetti = document.createElement('div');
   confetti.classList.add('confetti');
@@ -98,6 +98,7 @@ function createConfetti() {
   }, 5000);
 }
 
+// Criação dos balões
 function createBalloon() {
   const balloon = document.createElement('div');
   balloon.classList.add('balloon');
