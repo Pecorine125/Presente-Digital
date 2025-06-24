@@ -1,29 +1,17 @@
 body, html {
   margin: 0; padding: 0; height: 100%;
   background: #ffe6f0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
 }
 
 #app {
   text-align: center;
   width: 100%;
   max-width: 400px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* padrão começa no topo */
-  align-items: center;
-  padding: 20px 10px;
-  box-sizing: border-box;
-  position: relative;
-}
-
-#app.message-active {
-  justify-content: center; /* centraliza verticalmente quando mostrar mensagem final */
 }
 
 button {
@@ -35,47 +23,23 @@ button {
   background-color: #e91e63;
   color: white;
   transition: background-color 0.3s;
-  z-index: 10;
 }
 
 button:hover {
   background-color: #ad1457;
 }
 
-#countdown {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #c2185b;
-  margin: 20px 0 10px 0;
-  z-index: 10;
-}
-
 #animationArea {
-  margin-top: 20px;
+  margin-top: 40px;
   height: 200px;
   position: relative;
-  width: 100%;
-  z-index: 5;
 }
 
-#finalMessage {
+#message {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #c2185b;
+  margin-top: 30px;
   opacity: 0;
-  animation: fadeInScale 2s forwards;
-  margin: 0;
-  padding: 0 15px;
-  max-height: 80vh;
-  overflow-y: auto;
-  text-align: center;
-  /* Para garantir centralização */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  z-index: 10;
+  transition: opacity 1s ease;
 }
 
 /* Confetes */
@@ -89,7 +53,6 @@ button:hover {
   animation-name: fall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  z-index: 1;
 }
 
 @keyframes fall {
@@ -99,7 +62,59 @@ button:hover {
   }
 }
 
-/* Animação da mensagem final */
+/* Texto piscando */
+.blink {
+  animation: blinkAnimation 1s infinite;
+  font-weight: bold;
+  font-size: 2rem;
+  color: #e91e63;
+}
+
+@keyframes blinkAnimation {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+/* Balões */
+.balloon {
+  position: fixed;
+  bottom: -100px;
+  width: 40px;
+  height: 60px;
+  background-color: #f48fb1;
+  border-radius: 20px 20px 30px 30px;
+  animation: rise 5s linear forwards;
+  opacity: 0.9;
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 2px;
+  height: 15px;
+  background: #666;
+  transform: translateX(-50%);
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+/* Mensagem final */
+#finalMessage {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c2185b;
+  opacity: 0;
+  animation: fadeInScale 2s forwards;
+  margin-top: 40px;
+}
+
 @keyframes fadeInScale {
   from {
     opacity: 0;

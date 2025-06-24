@@ -1,11 +1,8 @@
 const startBtn = document.getElementById('startBtn');
 const animationArea = document.getElementById('animationArea');
 const finalMessage = document.getElementById('finalMessage');
-const countdown = document.getElementById('countdown');
-const app = document.getElementById('app');
 
-let confettiInterval;
-
+// Função para criar confetes
 function createConfetti() {
   const confetti = document.createElement('div');
   confetti.classList.add('confetti');
@@ -18,51 +15,52 @@ function createConfetti() {
   }, 5000);
 }
 
-function explosionConfetti(amount = 70) {
-  for(let i = 0; i < amount; i++) {
-    createConfetti();
-  }
+// Função para criar balão
+function createBalloon() {
+  const balloon = document.createElement('div');
+  balloon.classList.add('balloon');
+  balloon.style.left = (Math.random() * 80 + 10) + 'vw';
+  balloon.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 70%)`;
+  balloon.style.animationDuration = (5 + Math.random()*3) + 's';
+  animationArea.appendChild(balloon);
+  setTimeout(() => {
+    balloon.remove();
+  }, 8000);
 }
 
-function showMessage() {
-  countdown.textContent = '';
-  finalMessage.innerHTML = `
-    <p>Querida Prof. Bianca Nora,</p>
-    <p>Desejo muita felicidade e abraços sinceros para você. Que sua vida seja repleta de surpresas boas, e que você consiga alcançar todos os seus sonhos e metas com facilidade.</p>
-    <p>Se alguma dificuldade aparecer pelo caminho, saiba que pode sempre contar comigo, pois estarei ao seu lado para apoiar e ajudar no que precisar.</p>
-    <p>Tenho muito orgulho de você!</p>
-    <p>Feliz aniversário, Bianca Nora! 🎉❤️</p>
-  `;
-  finalMessage.style.animation = 'none';
-  void finalMessage.offsetWidth; // reinicia animação CSS
-  finalMessage.style.animation = null;
-
-  // Adiciona classe para centralizar verticalmente
-  app.classList.add('message-active');
-}
-
+// Animação principal em sequência
 function runAnimations() {
-  // Remove centralização para o começo da animação
-  app.classList.remove('message-active');
   startBtn.style.display = 'none';
   finalMessage.textContent = '';
   animationArea.innerHTML = '';
 
-  let secondsLeft = 10;
-  countdown.textContent = secondsLeft;
+  // 1. Confetes por 3 segundos
+  let confettiInterval = setInterval(createConfetti, 100);
+  setTimeout(() => {
+    clearInterval(confettiInterval);
+    animationArea.innerHTML = '';
+    // 2. Texto piscando "Parabéns!"
+    const congrats = document.createElement('div');
+    congrats.textContent = 'Parabéns!';
+    congrats.classList.add('blink');
+    animationArea.appendChild(congrats);
 
-  confettiInterval = setInterval(() => {
-    createConfetti();
-    secondsLeft--;
-    countdown.textContent = secondsLeft;
-
-    if(secondsLeft < 0) {
-      clearInterval(confettiInterval);
-      countdown.textContent = '';
-      explosionConfetti();
-      showMessage();
-    }
-  }, 1000);
+    setTimeout(() => {
+      animationArea.innerHTML = '';
+      // 3. Balões subindo por 4 segundos
+      let balloonInterval = setInterval(createBalloon, 300);
+      setTimeout(() => {
+        clearInterval(balloonInterval);
+        animationArea.innerHTML = '';
+        // 4. Mostrar mensagem final
+        finalMessage.textContent = 'Feliz aniversário querida prof. Bianca Nora';
+        finalMessage.style.animation = 'none';
+        // Forçar restart da animação
+        void finalMessage.offsetWidth;
+        finalMessage.style.animation = null;
+      }, 4000);
+    }, 2500);
+  }, 3000);
 }
 
 startBtn.addEventListener('click', runAnimations);
