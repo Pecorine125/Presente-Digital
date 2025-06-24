@@ -13,7 +13,7 @@ const messageParts = [
   "Feliz aniversário, Bianca Nora! 🎉❤️"
 ];
 
-// Função para criar confetes
+// Função para criar confetes animados
 function createConfetti() {
   const confetti = document.createElement('div');
   confetti.classList.add('confetti');
@@ -26,7 +26,7 @@ function createConfetti() {
   }, 5000);
 }
 
-// Função para criar balão
+// Função para criar balões animados
 function createBalloon() {
   const balloon = document.createElement('div');
   balloon.classList.add('balloon');
@@ -39,7 +39,7 @@ function createBalloon() {
   }, 8000);
 }
 
-// Função máquina de escrever para cada parte da mensagem
+// Função de máquina de escrever para texto
 function typeWriter(element, text, speed = 40) {
   return new Promise((resolve) => {
     let i = 0;
@@ -57,22 +57,25 @@ function typeWriter(element, text, speed = 40) {
   });
 }
 
-// Função para mostrar todas as partes sequencialmente com efeito
+// Mostrar a mensagem parte por parte com efeito de digitação
 async function showMessageParts() {
   finalMessage.style.opacity = 1;
   finalMessage.style.animation = 'none';
-  await new Promise(r => setTimeout(r, 10)); // forçar reflow
+  await new Promise(r => setTimeout(r, 10)); // Forçar reflow
+
+  finalMessage.textContent = ''; // limpa antes de começar
 
   for (const part of messageParts) {
     await typeWriter(finalMessage, part);
-    finalMessage.textContent += '\n'; // pular linha entre partes
-    await new Promise(r => setTimeout(r, 700)); // pausa entre as partes
+    finalMessage.textContent += '\n'; // pula linha
+    await new Promise(r => setTimeout(r, 700)); // pausa entre partes
   }
 
+  // Garante que a mensagem continue visível com animação suave
   finalMessage.style.animation = 'fadeInScale 2s forwards';
 }
 
-// Animação principal em sequência
+// Função principal para executar as animações em sequência
 function runAnimations() {
   startBtn.style.display = 'none';
   finalMessage.textContent = '';
@@ -80,7 +83,7 @@ function runAnimations() {
   animationArea.innerHTML = '';
 
   // 1. Confetes por 3 segundos
-  let confettiInterval = setInterval(createConfetti, 100);
+  const confettiInterval = setInterval(createConfetti, 100);
   setTimeout(() => {
     clearInterval(confettiInterval);
     animationArea.innerHTML = '';
@@ -95,17 +98,16 @@ function runAnimations() {
       animationArea.innerHTML = '';
 
       // 3. Balões subindo por 4 segundos
-      let balloonInterval = setInterval(createBalloon, 300);
+      const balloonInterval = setInterval(createBalloon, 300);
       setTimeout(() => {
         clearInterval(balloonInterval);
         animationArea.innerHTML = '';
 
-        // 4. Mostrar mensagem final com animação por partes
+        // 4. Mostrar mensagem final animada
         showMessageParts();
+
       }, 4000);
-
     }, 2500);
-
   }, 3000);
 }
 
