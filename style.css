@@ -1,1 +1,127 @@
+body, html {
+  margin: 0; padding: 0; height: 100%;
+  background: #ffe6f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
 
+#app {
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background-color: #e91e63;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ad1457;
+}
+
+#animationArea {
+  margin-top: 40px;
+  height: 200px;
+  position: relative;
+}
+
+#message {
+  font-size: 1.5rem;
+  margin-top: 30px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* Confetes */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: #e91e63;
+  opacity: 0.8;
+  top: -10px;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* Texto piscando */
+.blink {
+  animation: blinkAnimation 1s infinite;
+  font-weight: bold;
+  font-size: 2rem;
+  color: #e91e63;
+}
+
+@keyframes blinkAnimation {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+/* Balões */
+.balloon {
+  position: fixed;
+  bottom: -100px;
+  width: 40px;
+  height: 60px;
+  background-color: #f48fb1;
+  border-radius: 20px 20px 30px 30px;
+  animation: rise 5s linear forwards;
+  opacity: 0.9;
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 2px;
+  height: 15px;
+  background: #666;
+  transform: translateX(-50%);
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+/* Mensagem final */
+#finalMessage {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c2185b;
+  opacity: 0;
+  animation: fadeInScale 2s forwards;
+  margin-top: 40px;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
