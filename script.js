@@ -36,7 +36,7 @@ function getNextMondayAt830() {
   return result;
 }
 
-const targetDate = getNextMondayAt830();
+onst targetDate = getNextMonday820();
 
 function updateCountdown() {
   const now = new Date();
@@ -44,15 +44,16 @@ function updateCountdown() {
 
   if (diff <= 0) {
     countdownDiv.style.display = 'none';
-    showGiftBox();
-    runPartyAnimations();
+    runAnimations(); // Começa automaticamente
     return;
   }
 
-  const m = Math.floor(diff / (1000 * 60));
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
   const s = Math.floor((diff / 1000) % 60);
 
-  countdownDiv.textContent = `Presente será aberto em ${m}m ${s}s`;
+  countdownDiv.textContent = `Presente será aberto em ${d}d ${h}h ${m}m ${s}s`;
 }
 
 updateCountdown();
