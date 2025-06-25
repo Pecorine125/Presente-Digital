@@ -49,10 +49,9 @@ function updateCountdown() {
     return;
   }
 
-  const m = Math.floor(diff / (100000 * 60));
-  const s = Math.floor((diff / 100000) % 60);
+  const targetDate = new Date(Date.now() + 1 * 60 * 1000); // agora + 1 minuto
 
-  countdownDiv.textContent = `Presente será aberto em ${m}m ${s}s`;
+  const targetDate = getNextMonday820();
 }
 
 updateCountdown();
