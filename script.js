@@ -1,4 +1,3 @@
-const startBtn = document.getElementById('startBtn');
 const animationArea = document.getElementById('animationArea');
 const finalMessage = document.getElementById('finalMessage');
 
@@ -14,7 +13,7 @@ const messageParts = [
   "Do Seu Aluno: Harahel Guilherme 🦊🐱🎂!"
 ];
 
-// ⏳ Cronômetro regressivo de 1 minuto
+// Cronômetro até próxima segunda 08:30
 const countdownDiv = document.createElement('div');
 countdownDiv.id = 'countdown';
 countdownDiv.style.position = 'absolute';
@@ -27,8 +26,17 @@ countdownDiv.style.fontWeight = 'bold';
 countdownDiv.style.textAlign = 'center';
 document.body.appendChild(countdownDiv);
 
-// Define o tempo alvo (agora + 1 minuto)
-const targetDate = new Date(Date.now() + 1 * 60 * 1000);
+function getNextMondayAt830() {
+  const now = new Date();
+  const result = new Date();
+  result.setHours(8, 30, 0, 0);
+  const currentDay = now.getDay();
+  const daysUntilMonday = (8 - currentDay) % 7 || 7;
+  result.setDate(now.getDate() + daysUntilMonday);
+  return result;
+}
+
+const targetDate = getNextMondayAt830();
 
 function updateCountdown() {
   const now = new Date();
@@ -36,8 +44,8 @@ function updateCountdown() {
 
   if (diff <= 0) {
     countdownDiv.style.display = 'none';
-    startBtn.remove(); // remove o botão do DOM
-    runAnimations(); // inicia animações
+    showGiftBox();
+    runPartyAnimations();
     return;
   }
 
@@ -50,11 +58,20 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Esconde o botão manual, não será usado
-startBtn.style.display = 'none';
+// Presente animado
+function showGiftBox() {
+  const gift = document.createElement('div');
+  gift.classList.add('gift-box');
+  animationArea.appendChild(gift);
 
-// 🎉 Animações
+  // Após 4 segundos "abre" o presente e mostra mensagem
+  setTimeout(() => {
+    gift.classList.add('open');
+    showMessageParts();
+  }, 4000);
+}
 
+// Confetes
 function createConfetti() {
   const confetti = document.createElement('div');
   confetti.classList.add('confetti');
@@ -62,11 +79,10 @@ function createConfetti() {
   confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
   confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
   animationArea.appendChild(confetti);
-  setTimeout(() => {
-    confetti.remove();
-  }, 5000);
+  setTimeout(() => confetti.remove(), 5000);
 }
 
+// Balões
 function createBalloon() {
   const balloon = document.createElement('div');
   balloon.classList.add('balloon');
@@ -74,13 +90,24 @@ function createBalloon() {
   balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
   balloon.style.animationDuration = (5 + Math.random() * 3) + 's';
   animationArea.appendChild(balloon);
+  setTimeout(() => balloon.remove(), 8000);
+}
+
+function runPartyAnimations() {
+  // Começa confetes e balões
+  const confettiInterval = setInterval(createConfetti, 100);
+  const balloonInterval = setInterval(createBalloon, 300);
+
+  // Para os efeitos após 8 segundos
   setTimeout(() => {
-    balloon.remove();
+    clearInterval(confettiInterval);
+    clearInterval(balloonInterval);
+    animationArea.innerHTML = '';
   }, 8000);
 }
 
 function typeWriter(element, text, speed = 40) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     let i = 0;
     function typing() {
       if (i < text.length) {
@@ -109,31 +136,4 @@ async function showMessageParts() {
   }
 
   finalMessage.style.animation = 'fadeInScale 2s forwards';
-}
-
-function runAnimations() {
-  finalMessage.innerHTML = '';
-  finalMessage.style.opacity = 0;
-  animationArea.innerHTML = '';
-
-  const confettiInterval = setInterval(createConfetti, 100);
-  setTimeout(() => {
-    clearInterval(confettiInterval);
-    animationArea.innerHTML = '';
-
-    const congrats = document.createElement('div');
-    congrats.textContent = 'Parabéns!';
-    congrats.classList.add('blink');
-    animationArea.appendChild(congrats);
-
-    setTimeout(() => {
-      animationArea.innerHTML = '';
-      const balloonInterval = setInterval(createBalloon, 300);
-      setTimeout(() => {
-        clearInterval(balloonInterval);
-        animationArea.innerHTML = '';
-        showMessageParts();
-      }, 4000);
-    }, 2500);
-  }, 3000);
 }
