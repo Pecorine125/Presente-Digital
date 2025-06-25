@@ -49,8 +49,8 @@ function updateCountdown() {
     return;
   }
 
-  const m = Math.floor(diff / (1000 * 60));
-  const s = Math.floor((diff / 1000) % 60);
+  const m = Math.floor(diff / (100 * 60));
+  const s = Math.floor((diff / 100) % 60);
 
   countdownDiv.textContent = `Presente será aberto em ${m}m ${s}s`;
 }
