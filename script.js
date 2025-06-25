@@ -14,7 +14,7 @@ const messageParts = [
   "Do Seu Aluno: Harahel Guilherme 🦊🐱🎂!"
 ];
 
-// ⏳ Cronômetro regressivo até segunda às 08:20
+// ⏳ Cronômetro regressivo de 1 minuto
 const countdownDiv = document.createElement('div');
 countdownDiv.id = 'countdown';
 countdownDiv.style.position = 'absolute';
@@ -27,17 +27,8 @@ countdownDiv.style.fontWeight = 'bold';
 countdownDiv.style.textAlign = 'center';
 document.body.appendChild(countdownDiv);
 
-// Próxima segunda às 08:20
-function getNextMonday820() {
-  const now = new Date();
-  const result = new Date();
-  result.setHours(8, 20, 0, 0);
-  result.setDate(now.getDate() + ((1 + 7 - now.getDay()) % 7 || 7)); // próxima segunda
-  if (now > result) result.setDate(result.getDate() + 7);
-  return result;
-}
-
-const targetDate = getNextMonday820();
+// Define o tempo alvo (agora + 1 minuto)
+const targetDate = new Date(Date.now() + 1 * 60 * 1000);
 
 function updateCountdown() {
   const now = new Date();
@@ -45,13 +36,15 @@ function updateCountdown() {
 
   if (diff <= 0) {
     countdownDiv.style.display = 'none';
-    runAnimations(); // Começa automaticamente
+    startBtn.remove(); // remove o botão do DOM
+    runAnimations(); // inicia animações
     return;
   }
 
-  const targetDate = new Date(Date.now() + 1 * 60 * 1000); // agora + 1 minuto
+  const m = Math.floor(diff / (1000 * 60));
+  const s = Math.floor((diff / 1000) % 60);
 
-  const targetDate = getNextMonday820();
+  countdownDiv.textContent = `Presente será aberto em ${m}m ${s}s`;
 }
 
 updateCountdown();
