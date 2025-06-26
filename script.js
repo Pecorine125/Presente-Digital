@@ -16,10 +16,8 @@ const messageParts = [
   "E da sua Turma Preferida 3°C"
 ];
 
-// Esconde botão manual
 startBtn.style.display = 'none';
 
-// Cria div para contador fixo no topo, se não existir
 let countdownDiv = document.getElementById('countdown');
 if (!countdownDiv) {
   countdownDiv = document.createElement('div');
@@ -27,7 +25,6 @@ if (!countdownDiv) {
   document.body.appendChild(countdownDiv);
 }
 
-// Função para obter próxima segunda 8:30
 function getNextMonday830() {
   const now = new Date();
   const day = now.getDay();
@@ -46,9 +43,6 @@ function getNextMonday830() {
 
 const targetDate = getNextMonday830();
 
-let characterState = 'walking'; // walking, gift
-
-// Atualiza contador regressivo e animações
 function updateCountdown() {
   const now = new Date();
   const diff = targetDate - now;
@@ -59,8 +53,6 @@ function updateCountdown() {
     return;
   }
 
-  updateCharacterState(diff);
-
   const d = Math.floor(diff / (1000 * 60 * 60 * 24));
   const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const m = Math.floor((diff / (1000 * 60)) % 60);
@@ -69,55 +61,6 @@ function updateCountdown() {
   countdownDiv.textContent = `Presente será aberto em ${d}d ${h}h ${m}m ${s}s`;
 }
 
-// Atualiza animação do personagem conforme tempo restante
-function updateCharacterState(diff) {
-  if (diff > 5 * 60 * 1000) {
-    if (characterState !== 'walking') {
-      characterState = 'walking';
-      animationArea.innerHTML = '';
-      animationArea.appendChild(createWalkingCharacter());
-    }
-  } else if (diff > 0) {
-    if (characterState !== 'gift') {
-      characterState = 'gift';
-      animationArea.innerHTML = '';
-      animationArea.appendChild(createGiftAnimation());
-    }
-  }
-}
-
-// Cria personagem andando
-function createWalkingCharacter() {
-  const character = document.createElement('div');
-  character.classList.add('walkingCharacter');
-  return character;
-}
-
-// Cria presente animado
-function createGiftAnimation() {
-  const gift = document.createElement('div');
-  gift.classList.add('giftAnimation');
-  return gift;
-}
-
-// Efeito máquina de escrever
-function typeWriter(element, text, speed = 40) {
-  return new Promise((resolve) => {
-    let i = 0;
-    function typing() {
-      if (i < text.length) {
-        element.textContent += text.charAt(i);
-        i++;
-        setTimeout(typing, speed);
-      } else {
-        resolve();
-      }
-    }
-    typing();
-  });
-}
-
-// Mostra mensagens da carta sequencialmente
 async function showMessageParts() {
   finalMessage.style.opacity = 1;
   finalMessage.style.animation = 'none';
@@ -134,7 +77,22 @@ async function showMessageParts() {
   finalMessage.style.animation = 'fadeInScale 2s forwards';
 }
 
-// Sequência final: confetes, parabéns, balões e mensagem
+function typeWriter(element, text, speed = 40) {
+  return new Promise((resolve) => {
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else {
+        resolve();
+      }
+    }
+    typing();
+  });
+}
+
 function runFinalSequence() {
   animationArea.innerHTML = '';
   finalMessage.style.opacity = 0;
@@ -165,7 +123,6 @@ function runFinalSequence() {
   }, 3000);
 }
 
-// Cria confete
 function createConfetti() {
   const confetti = document.createElement('div');
   confetti.classList.add('confetti');
@@ -176,7 +133,6 @@ function createConfetti() {
   setTimeout(() => confetti.remove(), 5000);
 }
 
-// Cria balão
 function createBalloon() {
   const balloon = document.createElement('div');
   balloon.classList.add('balloon');
@@ -187,6 +143,7 @@ function createBalloon() {
   setTimeout(() => balloon.remove(), 8000);
 }
 
-// Inicia atualização a cada segundo
-updateCountdown();
-setInterval(updateCountdown, 1000);
+window.addEventListener('load', () => {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
