@@ -164,38 +164,3 @@ button:hover {
   from { opacity: 0; transform: translateX(-50%) scale(0.95); }
   to { opacity: 1; transform: translateX(-50%) scale(1); }
 }
-
-/* Personagem andando (quadrado rosa) */
-.walkingCharacter {
-  width: 50px;
-  height: 80px;
-  background-color: #e91e63;
-  border-radius: 10px;
-  position: relative;
-  animation: walkSideToSide 4s linear infinite;
-  margin: 0 auto;
-  top: 20px;
-}
-
-@keyframes walkSideToSide {
-  0%, 100% { left: 0; }
-  50% { left: 150px; }
-}
-
-/* Presente animado (quadrado que balança) */
-.giftAnimation {
-  width: 70px;
-  height: 70px;
-  background-color: #ad1457;
-  border-radius: 10px;
-  position: relative;
-  animation: giftShake 1s ease-in-out infinite;
-  margin: 0 auto;
-  top: 20px;
-}
-
-@keyframes giftShake {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  75% { transform: rotate(-5deg); }
-}
