@@ -19,15 +19,17 @@ const messageParts = [
 // Esconde botão manual
 startBtn.style.display = 'none';
 
-// Cria div para contador fixo no topo
-const countdownDiv = document.createElement('div');
-countdownDiv.id = 'countdown';
-document.body.appendChild(countdownDiv);
+// Cria div para contador fixo no topo, se não existir
+let countdownDiv = document.getElementById('countdown');
+if (!countdownDiv) {
+  countdownDiv = document.createElement('div');
+  countdownDiv.id = 'countdown';
+  document.body.appendChild(countdownDiv);
+}
 
 // Função para obter próxima segunda 8:30
 function getNextMonday830() {
   const now = new Date();
-  const result = new Date(now);
   const day = now.getDay();
 
   let daysUntilMonday = (1 - day + 7) % 7;
@@ -36,6 +38,7 @@ function getNextMonday830() {
       daysUntilMonday = 7;
     }
   }
+  const result = new Date(now);
   result.setDate(now.getDate() + daysUntilMonday);
   result.setHours(8, 30, 0, 0);
   return result;
@@ -43,7 +46,9 @@ function getNextMonday830() {
 
 const targetDate = getNextMonday830();
 
-// Atualiza contador regressivo
+let characterState = 'walking'; // walking, gift
+
+// Atualiza contador regressivo e animações
 function updateCountdown() {
   const now = new Date();
   const diff = targetDate - now;
@@ -63,8 +68,6 @@ function updateCountdown() {
 
   countdownDiv.textContent = `Presente será aberto em ${d}d ${h}h ${m}m ${s}s`;
 }
-
-let characterState = 'walking';
 
 // Atualiza animação do personagem conforme tempo restante
 function updateCharacterState(diff) {
