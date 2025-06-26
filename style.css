@@ -15,6 +15,8 @@ body, html {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  position: relative;
+  padding-top: 60px; /* espaço para cronômetro fixo */
 }
 
 /* Botão de começar */
@@ -27,6 +29,8 @@ button {
   background-color: #e91e63;
   color: white;
   transition: background-color 0.3s;
+  position: relative;
+  z-index: 10;
 }
 
 button:hover {
@@ -48,6 +52,7 @@ button:hover {
   color: #e91e63;
 }
 
+/* Animações keyframes */
 @keyframes blinkAnimation {
   0%, 50%, 100% { opacity: 1; }
   25%, 75% { opacity: 0; }
@@ -64,6 +69,7 @@ button:hover {
   animation-name: fall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  z-index: 999;
 }
 
 @keyframes fall {
@@ -83,6 +89,7 @@ button:hover {
   border-radius: 20px 20px 30px 30px;
   animation: rise 5s linear forwards;
   opacity: 0.9;
+  z-index: 999;
 }
 
 .balloon::after {
@@ -122,6 +129,7 @@ button:hover {
   line-height: 1.6;
   white-space: pre-line;
   padding: 0 10px;
+  z-index: 20;
 }
 
 @keyframes fadeInScale {
@@ -135,10 +143,10 @@ button:hover {
   }
 }
 
-/* Contador bonito */
+/* Contador fixo no topo */
 #countdown {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #fce4ec;
@@ -155,5 +163,40 @@ button:hover {
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateX(-50%) scale(0.95); }
-  to   { opacity: 1; transform: translateX(-50%) scale(1); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+/* Personagem andando (quadrado rosa) */
+.walkingCharacter {
+  width: 50px;
+  height: 80px;
+  background-color: #e91e63;
+  border-radius: 10px;
+  position: relative;
+  animation: walkSideToSide 4s linear infinite;
+  margin: 0 auto;
+  top: 20px;
+}
+
+@keyframes walkSideToSide {
+  0%, 100% { left: 0; }
+  50% { left: 150px; }
+}
+
+/* Presente animado (quadrado que balança) */
+.giftAnimation {
+  width: 70px;
+  height: 70px;
+  background-color: #ad1457;
+  border-radius: 10px;
+  position: relative;
+  animation: giftShake 1s ease-in-out infinite;
+  margin: 0 auto;
+  top: 20px;
+}
+
+@keyframes giftShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
 }
